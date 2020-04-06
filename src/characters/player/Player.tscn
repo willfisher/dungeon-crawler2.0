@@ -1,0 +1,93 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/sprites/characters/sprite frames/gold knight.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://src/characters/Character.gd" type="Script" id=2]
+[ext_resource path="res://src/characters/properties/Controllable.gd" type="Script" id=3]
+[ext_resource path="res://src/characters/properties/AnimatedCharacter.gd" type="Script" id=4]
+[ext_resource path="res://src/characters/properties/HealthBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/characters/properties/Living.gd" type="Script" id=6]
+[ext_resource path="res://src/characters/combat/Hitbox.gd" type="Script" id=8]
+[ext_resource path="res://src/characters/combat/Attack.gd" type="Script" id=9]
+[ext_resource path="res://assets/sprites/shadows/oval.png" type="Texture" id=10]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.5, 2.369 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4.56794, 10.3516 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 6.22878, 16.1645 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 7
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="UI" type="Node2D" parent="." groups=[
+"keep_scale",
+]]
+
+[node name="HealthBar" parent="UI" instance=ExtResource( 5 )]
+margin_left = -8.0
+margin_top = -21.8647
+margin_right = 8.0
+margin_bottom = -19.8647
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, 14 )
+shape = SubResource( 1 )
+
+[node name="Controllable" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="AnimatedCharacter" type="Node2D" parent="." groups=[
+"keep_on_death",
+]]
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="AnimatedCharacter"]
+modulate = Color( 0.5, 0.5, 0.5, 0.294118 )
+position = Vector2( 0, 15 )
+texture = ExtResource( 10 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="AnimatedCharacter"]
+frames = ExtResource( 1 )
+animation = "idle"
+frame = 7
+
+[node name="Living" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="Attack" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
+position = Vector2( 6.9755, 0 )
+shape = SubResource( 2 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+input_pickable = false
+monitoring = false
+collision_layer = 8
+collision_mask = 0
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 3 )
+[connection signal="state_changed" from="." to="AnimatedCharacter" method="_on_state_changed"]
+[connection signal="attack" from="Controllable" to="." method="_on_attack"]
+[connection signal="attack" from="Controllable" to="Attack" method="_on_attack"]
+[connection signal="attack_finished" from="AnimatedCharacter" to="." method="_on_attack_finished"]
+[connection signal="attack_finished" from="AnimatedCharacter" to="Attack" method="_on_attack_finished"]
+[connection signal="animation_finished" from="AnimatedCharacter/AnimatedSprite" to="AnimatedCharacter" method="_on_AnimatedSprite_animation_finished"]
+[connection signal="died" from="Living" to="." method="_on_death"]
+[connection signal="health_updated" from="Living" to="UI/HealthBar" method="_on_health_updated"]
+[connection signal="max_health_updated" from="Living" to="UI/HealthBar" method="_on_max_health_updated"]
+[connection signal="take_damage" from="Hitbox" to="Living" method="_on_take_damage"]
