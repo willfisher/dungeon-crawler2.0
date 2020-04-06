@@ -1,4 +1,4 @@
-extends Node
+var path_tools = preload("res://src/util/PathTools.gd")
 
 var Room = preload("res://src/levels/dungeon generation/generators/Room.tscn")
 
@@ -8,7 +8,7 @@ var max_size : int  # maximum room size (in tiles)
 var hspread : int  # horizontal spread (in pixels)
 var cull : int  # chance to cull room
 
-func _init(num_rooms = 50, min_size = 4, max_size = 10, hspread = 25, cull = 0.5):
+func _init(num_rooms = 50, min_size = 6, max_size = 15, hspread = 25, cull = 0.5):
 	self.num_rooms = num_rooms
 	self.min_size = min_size + 2
 	self.max_size = max_size + 2
@@ -48,40 +48,6 @@ func generate(physics_base):
 	room_holder.queue_free()
 	
 	# generate a minimum spanning tree connecting the rooms
-	var path = find_mst(room_positions)
+	var path = path_tools.find_mst(room_positions)
 	
 	return Dungeon.new(rooms, path)
-
-func find_mst(nodes):
-	# Prim's algorithm
-	# Given an array of positions (nodes), generates a minimum
-	# spanning tree
-	# Returns an AStar object
-	
-	# Initialize the AStar and add the first point
-	var path = AStar.new()
-	path.add_point(path.get_available_point_id(), nodes.pop_front())
-	
-	# Repeat until no more nodes remain
-	while nodes:
-		var min_dist = INF  # Minimum distance so far
-		var min_p = null  # Position of that node
-		var p = null  # Current position
-		# Loop through points in path
-		for p1 in path.get_points():
-			p1 = path.get_point_position(p1)
-			# Loop through the remaining nodes
-			for p2 in nodes:
-				# If the node is closer, make it the closest
-				if p1.distance_to(p2) < min_dist:
-					min_dist = p1.distance_to(p2)
-					min_p = p2
-					p = p1
-		# Insert the resulting node into the path and add
-		# its connection
-		var n = path.get_available_point_id()
-		path.add_point(n, min_p)
-		path.connect_points(path.get_closest_point(p), n)
-		# Remove the node from the array so it isn't visited again
-		nodes.erase(min_p)
-	return path
