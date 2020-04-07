@@ -1,13 +1,17 @@
 extends Node2D
 
 # Dungeon generation
-var generator = preload("res://src/levels/dungeon generation/generators/PhysicsGeneration.gd").new()
-var tiler = preload("res://src/levels/dungeon generation/tilers/DefaultTiler.gd").new()
+var generator = preload("res://src/dungeon generation/generators/PhysicsGeneration.gd").new()
+var tiler = preload("res://src/dungeon generation/tilers/DefaultTiler.gd").new()
+var decorator = preload("res://src/dungeon generation/decorators/Decorator.gd").new(
+	[[StaticStyles.default_room_1, 1]]
+)
 
 func _ready():
 	yield(get_tree(), "idle_frame")
 	var dungeon = yield(generator.generate(get_tree()), "completed")
 	tiler.tile($Floor, dungeon)
+	decorator.decorate($Props, dungeon.rooms)
 	
 	instantiate_player(dungeon)
 

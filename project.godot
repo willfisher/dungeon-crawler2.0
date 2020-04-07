@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "Dungeon",
 "language": "GDScript",
-"path": "res://src/levels/dungeon generation/Dungeon.gd"
+"path": "res://src/dungeon generation/Dungeon.gd"
 }, {
 "base": "Node",
 "class": "Follow",
@@ -49,10 +49,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/characters/properties/Living.gd"
 }, {
+"base": "Reference",
+"class": "Monument",
+"language": "GDScript",
+"path": "res://src/dungeon generation/decorators/monuments/Monument.gd"
+}, {
+"base": "Reference",
+"class": "RoomStyle",
+"language": "GDScript",
+"path": "res://src/dungeon generation/decorators/monuments/RoomStyle.gd"
+}, {
 "base": "Node",
 "class": "SimpleAttack",
 "language": "GDScript",
 "path": "res://src/characters/ai/SimpleAttack.gd"
+}, {
+"base": "Reference",
+"class": "SpawnableMonument",
+"language": "GDScript",
+"path": "res://src/dungeon generation/decorators/monuments/SpawnableMonument.gd"
 } ]
 _global_script_class_icons={
 "AnimatedCharacter": "",
@@ -63,7 +78,10 @@ _global_script_class_icons={
 "Follow": "",
 "Hitbox": "",
 "Living": "",
-"SimpleAttack": ""
+"Monument": "",
+"RoomStyle": "",
+"SimpleAttack": "",
+"SpawnableMonument": ""
 }
 
 [application]
@@ -74,6 +92,7 @@ run/main_scene="res://src/levels/Vault.tscn"
 [autoload]
 
 Steering="*res://src/autoload/Steering.gd"
+StaticStyles="*res://src/dungeon generation/decorators/StaticStyles.gd"
 
 [display]
 

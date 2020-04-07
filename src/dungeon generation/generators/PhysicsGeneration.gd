@@ -1,6 +1,6 @@
 var path_tools = preload("res://src/util/PathTools.gd")
 
-var Room = preload("res://src/levels/dungeon generation/generators/Room.tscn")
+var Room = preload("res://src/dungeon generation/generators/Room.tscn")
 
 var num_rooms : int  # number of rooms to generate
 var min_size : int  # minimum room size (in tiles)
