@@ -96,10 +96,10 @@ func update_sprite():
 				CHARACTER_CLASS.gold_knight:
 					match character_gender:
 						CHARACTER_GENDER.male:
-							animated_sprite.set_sprite_frames(preload("res://assets/sprites/characters/sprite frames/gold knight.tres"))
+							animated_sprite.set_sprite_frames(load("res://assets/sprites/characters/sprite frames/gold knight.tres"))
 				CHARACTER_CLASS.ranger:
 					match character_gender:
 						CHARACTER_GENDER.male:
-							animated_sprite.set_sprite_frames(preload("res://assets/sprites/characters/sprite frames/ranger.tres"))
+							animated_sprite.set_sprite_frames(load("res://assets/sprites/characters/sprite frames/ranger.tres"))
 				CHARACTER_CLASS.skeleton:
-					animated_sprite.set_sprite_frames(preload("res://assets/sprites/characters/sprite frames/skeleton.tres"))
+					animated_sprite.set_sprite_frames(load("res://assets/sprites/characters/sprite frames/skeleton.tres"))
