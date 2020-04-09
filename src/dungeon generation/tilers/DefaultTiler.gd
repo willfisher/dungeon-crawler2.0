@@ -1,19 +1,19 @@
-var floor_tile_id : int
-var wall_tile_id : int
+var floor_tile : Tile
+var wall_tile : Tile
 
-func _init(floor_tile_id = 3, wall_tile_id = 0):
-	self.floor_tile_id = floor_tile_id
-	self.wall_tile_id = wall_tile_id
+func _init(floor_tile, wall_tile):
+	self.floor_tile = floor_tile
+	self.wall_tile = wall_tile
 
-func tile(tile_map, dungeon, refresh_bitmap = true):
-	tile_floors(tile_map, dungeon, false)
-	tile_corridors(tile_map, dungeon, false)
-	tile_walls(tile_map, dungeon, false)
+func tile(tile_map_package : TileMapPackage, dungeon, refresh_bitmap = true):
+	tile_floors(tile_map_package, dungeon, false)
+	tile_corridors(tile_map_package, dungeon, false)
+	tile_walls(tile_map_package, dungeon, false)
 	
 	if refresh_bitmap:
-		tile_map.update_bitmask_region()
+		refresh_bitmap(tile_map_package)
 
-func tile_floors(tile_map, dungeon, refresh_bitmap = true):
+func tile_floors(tile_map_package : TileMapPackage, dungeon, refresh_bitmap = true):
 	var rooms = dungeon.rooms
 	var path = dungeon.path
 	
@@ -22,24 +22,24 @@ func tile_floors(tile_map, dungeon, refresh_bitmap = true):
 	for room in rooms:
 		for x in range(room.position.x, room.position.x + room.size.x):
 			for y in range(room.position.y, room.position.y + room.size.y):
-				tile_map.set_cell(x, y, floor_tile_id)
+				tile_map_package.draw_tile(floor_tile, Vector2(x, y))
 		
 	if refresh_bitmap:
-		tile_map.update_bitmask_region()
+		refresh_bitmap(tile_map_package)
 
-func tile_walls(tile_map, dungeon, refresh_bitmap = true):
+func tile_walls(tile_map_package : TileMapPackage, dungeon, refresh_bitmap = true):
 	var bounds = dungeon.get_bounds()
 	var topleft = bounds.position
 	var bottomright = bounds.end
 	for x in range(topleft.x, bottomright.x):
-		for y in range(topleft.y, bottomright.y):
-			if tile_map.get_cell(x, y + 1) == floor_tile_id and tile_map.get_cell(x, y) == -1:
-				tile_map.set_cell(x, y, wall_tile_id)
+		for y in range(topleft.y - 1, bottomright.y):
+			if tile_map_package.get_cell(x, y + 1, floor_tile.layer) == floor_tile.tile_index and tile_map_package.get_cell(x, y, floor_tile.layer) == -1:
+				tile_map_package.draw_tile(wall_tile, Vector2(x, y))
 	
 	if refresh_bitmap:
-		tile_map.update_bitmask_region()
+		refresh_bitmap(tile_map_package)
 
-func tile_corridors(tile_map, dungeon, refresh_bitmap = true):
+func tile_corridors(tile_map_package : TileMapPackage, dungeon, refresh_bitmap = true):
 	var rooms = dungeon.rooms
 	var path = dungeon.path
 	# Carve rooms
@@ -54,13 +54,13 @@ func tile_corridors(tile_map, dungeon, refresh_bitmap = true):
 													path.get_point_position(p).y)
 				var end = Vector2(path.get_point_position(conn).x,
 													path.get_point_position(conn).y)
-				carve_path(tile_map, start, end)
+				carve_path(tile_map_package, start, end)
 		corridors.append(p)
 	
 	if refresh_bitmap:
-		tile_map.update_bitmask_region()
+		refresh_bitmap(tile_map_package)
 
-func carve_path(tile_map, pos1, pos2):
+func carve_path(tile_map_package : TileMapPackage, pos1, pos2):
 	# Carve a path between two points
 	var x_diff = sign(pos2.x - pos1.x)
 	var y_diff = sign(pos2.y - pos1.y)
@@ -73,8 +73,13 @@ func carve_path(tile_map, pos1, pos2):
 		x_y = pos2
 		y_x = pos1
 	for x in range(pos1.x, pos2.x, x_diff):
-		tile_map.set_cell(x, x_y.y, floor_tile_id)
-		tile_map.set_cell(x, x_y.y + y_diff, floor_tile_id)  # widen the corridor
+		tile_map_package.draw_tile(floor_tile, Vector2(x, x_y.y))
+		tile_map_package.draw_tile(floor_tile, Vector2(x, x_y.y + y_diff))  # widen the corridor
 	for y in range(pos1.y, pos2.y, y_diff):
-		tile_map.set_cell(y_x.x, y, floor_tile_id)
-		tile_map.set_cell(y_x.x + x_diff, y, floor_tile_id)
+		tile_map_package.draw_tile(floor_tile, Vector2(y_x.x, y))
+		tile_map_package.draw_tile(floor_tile, Vector2(y_x.x + x_diff, y))
+
+func refresh_bitmap(tile_map_package):
+	tile_map_package.get_layer(floor_tile.layer).update_bitmask_region()
+	if floor_tile.layer != wall_tile.layer:
+		tile_map_package.get_layer(wall_tile.layer).update_bitmask_region()

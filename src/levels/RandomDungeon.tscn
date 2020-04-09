@@ -16,6 +16,26 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="FloorDecor" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 4
+collision_mask = 7
+format = 1
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Shadows" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 4
+collision_mask = 7
+format = 1
+__meta__ = {
+"_editor_description_": ""
+}
+
 [node name="Props" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )

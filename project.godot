@@ -68,6 +68,16 @@ _global_script_classes=[ {
 "class": "SpawnableMonument",
 "language": "GDScript",
 "path": "res://src/dungeon generation/decorators/monuments/SpawnableMonument.gd"
+}, {
+"base": "Reference",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://src/dungeon generation/decorators/monuments/Tile.gd"
+}, {
+"base": "Reference",
+"class": "TileMapPackage",
+"language": "GDScript",
+"path": "res://src/dungeon generation/decorators/TileMapPackage.gd"
 } ]
 _global_script_class_icons={
 "AnimatedCharacter": "",
@@ -81,7 +91,9 @@ _global_script_class_icons={
 "Monument": "",
 "RoomStyle": "",
 "SimpleAttack": "",
-"SpawnableMonument": ""
+"SpawnableMonument": "",
+"Tile": "",
+"TileMapPackage": ""
 }
 
 [application]

@@ -11,7 +11,7 @@ func _init(density, spawnable_monuments = []):
 func add_monument(monument : Monument, probabability, max_per_room = -1):
 	spawnable_monuments.append(SpawnableMonument.new(monument, probabability, max_per_room))
 
-func decorate(tile_map, room):
+func decorate(tile_map_package : TileMapPackage, room):
 	var area = room.get_area()
 	var tiles_filled = []
 	
@@ -32,9 +32,8 @@ func decorate(tile_map, room):
 				continue
 			if randf() < probability:
 				var spawn_point = available_points[randi() % available_points.size()]
-				monument.spawn(tile_map, spawn_point)
-				for tile in monument.pattern:
-					tiles_filled.append(tile[0] - monument.get_center() + spawn_point)
+				monument.spawn(tile_map_package, spawn_point)
+				tiles_filled += monument.get_tiles_used(spawn_point)
 				total_used[i] += 1
 
 func usable_monuments(room):

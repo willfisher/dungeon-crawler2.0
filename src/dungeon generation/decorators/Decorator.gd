@@ -10,16 +10,16 @@ func _init(room_styles = []):
 	for room_style in room_styles:
 		total_probability += room_style[1]
 	
-func decorate(tile_map, rooms):
+func decorate(tile_map_package : TileMapPackage, rooms):
 	for room in rooms:
-		decorate_room(tile_map, room)
+		decorate_room(tile_map_package, room)
 
-func decorate_room(tile_map, room):
+func decorate_room(tile_map_package : TileMapPackage, room):
 	var prob = randf() * total_probability
 	var running_prob = 0
 	for room_style in room_styles:
 		if prob >= running_prob and prob < running_prob + room_style[1]:
-			room_style[0].decorate(tile_map, room)
+			room_style[0].decorate(tile_map_package, room)
 			return
 		running_prob += room_style[1]
 
