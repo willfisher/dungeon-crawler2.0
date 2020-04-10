@@ -18,6 +18,12 @@ func _init(floor_main, floor_decorations, shadows, props):
 	self.shadows = shadows
 	self.props = props
 
+func draw(object, position : Vector2) -> void:
+	if object is Tile:
+		draw_tile(object, position)
+	elif object is Monument:
+		object.spawn(self, position)
+
 func draw_tile(tile : Tile, position : Vector2) -> void:
 	draw_by_id(tile.tile_index, tile.layer, position)
 

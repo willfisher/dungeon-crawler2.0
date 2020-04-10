@@ -7,7 +7,7 @@ var tiler = preload("res://src/dungeon generation/tilers/DefaultTiler.gd").new(
 	StaticStyles.wall_tile
 )
 var decorator = preload("res://src/dungeon generation/decorators/Decorator.gd").new(
-	[[StaticStyles.default_room_1, 0], [StaticStyles.default_room_2, 1]]
+	[[preload("res://src/dungeon generation/decorators/room styles/presets/BarrelsInCorner.gd").new(), 1]]
 )
 onready var tile_map_package = TileMapPackage.new(
 	$Floor,

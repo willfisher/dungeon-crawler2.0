@@ -57,17 +57,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "RoomStyle",
 "language": "GDScript",
-"path": "res://src/dungeon generation/decorators/monuments/RoomStyle.gd"
+"path": "res://src/dungeon generation/decorators/room styles/RoomStyle.gd"
 }, {
 "base": "Node",
 "class": "SimpleAttack",
 "language": "GDScript",
 "path": "res://src/characters/ai/SimpleAttack.gd"
-}, {
-"base": "Reference",
-"class": "SpawnableMonument",
-"language": "GDScript",
-"path": "res://src/dungeon generation/decorators/monuments/SpawnableMonument.gd"
 }, {
 "base": "Reference",
 "class": "Tile",
@@ -91,7 +86,6 @@ _global_script_class_icons={
 "Monument": "",
 "RoomStyle": "",
 "SimpleAttack": "",
-"SpawnableMonument": "",
 "Tile": "",
 "TileMapPackage": ""
 }

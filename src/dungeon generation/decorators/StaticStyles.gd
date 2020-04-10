@@ -66,51 +66,22 @@ var stone_tile = Tile.new(
 	STONE_TILE_ID,
 	TileMapPackage.LAYERS.floor_decorations
 )
-
 ################## PRE-DEFINED MONUMENTS ##################
 var chair = Monument.new(
-	1,
-	[[chair_tile, Vector2(0,0)], [small_circle_shadow_tile, Vector2(0,0)]],
-	1, 1
+	[[chair_tile, Vector2(0,0)], [small_circle_shadow_tile, Vector2(0,0)]]
 )
 var table = Monument.new(
-	3,
 	[[table_horizontal_tile, Vector2.ZERO], [empty_tile, Vector2(0,1)],
-	[empty_tile, Vector2(1,1)], [large_circle_shadow_tile, Vector2(0,1)]],
-	4, 4,
-	[[false, false, false], [false, true, false], [false, false, false]],
-	[[0,0,0],[0,1,0],[0,0,0]]
+	[empty_tile, Vector2(1,1)], [large_circle_shadow_tile, Vector2(0,1)]]
 )
 var table_chair = table.adjoin(chair.offset(Vector2(2, 1)))
 
 var altar = Monument.new(
-	2, [[altar_single_tile, Vector2(0,0)]], 0, 0
+	[[altar_single_tile, Vector2(0,0)]]
 )
 var stone_border = Monument.new(
-	2,
 	[[stone_tile, Vector2(0,0)], [stone_tile, Vector2(1,0)], [stone_tile, Vector2(2,0)],
 	[stone_tile, Vector2(0,1)], [stone_tile, Vector2(2,1)], [stone_tile, Vector2(0,2)],
-	[stone_tile, Vector2(1,2)], [stone_tile, Vector2(2,2)]],
-	3, 3,
-	[[false, false, false], [false, true, false], [false, false, false]],
-	[[0,0,0],[0,0,0],[0,0,0]]
+	[stone_tile, Vector2(1,2)], [stone_tile, Vector2(2,2)]]
 )
 var stone_altar = stone_border.adjoin(altar.offset(Vector2(1,1)))
-
-var default_room_1 = RoomStyle.new(
-	.1, [
-		SpawnableMonument.new(
-			altar, 1, 2
-		),
-		SpawnableMonument.new(
-			table_chair, .1, 1
-		)
-	]
-)
-var default_room_2 = RoomStyle.new(
-	1, [
-		SpawnableMonument.new(
-			stone_altar, 1, 1
-		)
-	]
-)
