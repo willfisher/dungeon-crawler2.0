@@ -14,7 +14,7 @@ var floor_tile = Tile.new(
 const WALLS_ID = 0
 var wall_tile = Tile.new(
 	WALLS_ID,
-	TileMapPackage.LAYERS.floor_main
+	TileMapPackage.LAYERS.props
 )
 const TABLE_HORIZONTAL_ID = 9
 var table_horizontal_tile = Tile.new(
@@ -75,13 +75,3 @@ var table = Monument.new(
 	[empty_tile, Vector2(1,1)], [large_circle_shadow_tile, Vector2(0,1)]]
 )
 var table_chair = table.adjoin(chair.offset(Vector2(2, 1)))
-
-var altar = Monument.new(
-	[[altar_single_tile, Vector2(0,0)]]
-)
-var stone_border = Monument.new(
-	[[stone_tile, Vector2(0,0)], [stone_tile, Vector2(1,0)], [stone_tile, Vector2(2,0)],
-	[stone_tile, Vector2(0,1)], [stone_tile, Vector2(2,1)], [stone_tile, Vector2(0,2)],
-	[stone_tile, Vector2(1,2)], [stone_tile, Vector2(2,2)]]
-)
-var stone_altar = stone_border.adjoin(altar.offset(Vector2(1,1)))

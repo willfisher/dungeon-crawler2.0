@@ -1,4 +1,5 @@
 extends RoomStyle
+class_name CompositeRoom
 
 var styles = []
 

@@ -1,5 +1,16 @@
 extends Node2D
 
+var barrels_and_scrap = CompositeRoom.new([
+							preload("res://src/dungeon generation/decorators/room styles/presets/FloorDecor.gd").new(),
+							preload("res://src/dungeon generation/decorators/room styles/presets/BarrelsInCorner.gd").new()
+						]
+					)
+var altar_room = CompositeRoom.new([
+						barrels_and_scrap,
+						preload("res://src/dungeon generation/decorators/room styles/presets/StoneAltar.gd").new()
+					]
+				)
+
 # Dungeon generation
 var generator = preload("res://src/dungeon generation/generators/PhysicsGeneration.gd").new()
 var tiler = preload("res://src/dungeon generation/tilers/DefaultTiler.gd").new(
@@ -7,7 +18,7 @@ var tiler = preload("res://src/dungeon generation/tilers/DefaultTiler.gd").new(
 	StaticStyles.wall_tile
 )
 var decorator = preload("res://src/dungeon generation/decorators/Decorator.gd").new(
-	[[preload("res://src/dungeon generation/decorators/room styles/presets/BarrelsInCorner.gd").new(), 1]]
+	[[barrels_and_scrap, 1], [altar_room, 1]]
 )
 onready var tile_map_package = TileMapPackage.new(
 	$Floor,

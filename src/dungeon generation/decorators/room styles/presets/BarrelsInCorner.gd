@@ -40,4 +40,21 @@ func decorate(tile_map_package : TileMapPackage, room):
 					position += Vector2(1 if corner in [0, 2] else -1, 0)
 				2:
 					position += Vector2(0, 1 if corner in [0, 1] else -1)
+			if blocking_corridor(tile_map_package, room, position):
+				continue
 			tile_map_package.draw(barrels[randi() % barrels.size()], position)
+
+func blocking_corridor(tile_map_package : TileMapPackage, room, position):
+	if position.x == room.position.x:
+		if tile_map_package.get_cell(position.x - 1, position.y, TileMapPackage.LAYERS.floor_main) >= 0:
+			return true
+	if position.x == room.position.x + room.size.x - 1:
+		if tile_map_package.get_cell(position.x + 1, position.y, TileMapPackage.LAYERS.floor_main) >= 0:
+			return true
+	if position.y == room.position.y:
+		if tile_map_package.get_cell(position.x, position.y - 1, TileMapPackage.LAYERS.floor_main) >= 0:
+			return true
+	if position.y == room.position.y + room.size.y - 1:
+		if tile_map_package.get_cell(position.x, position.y + 1, TileMapPackage.LAYERS.floor_main) >= 0:
+			return true
+	return false
